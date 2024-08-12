@@ -5,7 +5,6 @@ int main()
 
 {
     int value;
-    float raiz;
     printf("Digite um numero: ");
     scanf("%d", &value);    
     if (value > 0)

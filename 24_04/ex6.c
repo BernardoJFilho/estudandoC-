@@ -3,7 +3,7 @@
 int main() 
 
 {
-    char sexo[5];
+    char sexo;
     float altura, resultado;
     printf("Digite o seu sexo(H/M): ");
     scanf("%s", &sexo);
