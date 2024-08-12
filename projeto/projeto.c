@@ -59,15 +59,23 @@ void valores(){
     printf("Oque voce quer fazer?\n");
     printf("Digite 1 para ver a tabela de candidatos\n");
     printf("Digite 2 para votar\n");
-    printf("Digite 3 para outra pessoa votar\n");
-    printf("Digite 4 para mostrar o resultado da votacao e sair\n");
+    printf("Digite 3 para mostrar o resultado da votacao e sair\n");
 }
 
 int resultado(Candidato candidatos[], int tamanho) {
+    int number = 0;
+    char name;
     for (int i = 0; i < tamanho; i++)
     {
         printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].numero);
+        if (number < candidatos[i].numero)
+        {
+            name = candidatos[i].nome;
+            number = candidatos[i].numero;
+        }
     }
+
+    printf("O candidato ganhador e o %s com %d votos", name, number);
     
 }
 
