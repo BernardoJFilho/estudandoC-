@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 typedef struct {
     char nome[20];
@@ -12,7 +13,7 @@ typedef struct {
 } Candidato;
 
 int allCandidatos(Candidato candidatos[], int tamanho);
-int resultado(Candidato candidatos[], int tamanho);
+void resultado(Candidato candidatos[], int tamanho);
 void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[]);
 void valores();
 
@@ -50,6 +51,7 @@ int main() {
             continue;
         case 3:
             resultado(candidatos, numCandidatos);
+            value = 200;
             break;
         }
     }
@@ -62,21 +64,20 @@ void valores(){
     printf("Digite 3 para mostrar o resultado da votacao e sair\n");
 }
 
-int resultado(Candidato candidatos[], int tamanho) {
+void resultado(Candidato candidatos[], int tamanho) {
     int number = 0;
-    char name;
+    char name[20];
     for (int i = 0; i < tamanho; i++)
     {
         printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].numero);
         if (number < candidatos[i].numero)
         {
-            name = candidatos[i].nome;
+            strcpy(name, candidatos[i].nome);
             number = candidatos[i].numero;
         }
     }
 
     printf("O candidato ganhador e o %s com %d votos", name, number);
-    
 }
 
 int allCandidatos(Candidato candidatos[], int tamanho) {
