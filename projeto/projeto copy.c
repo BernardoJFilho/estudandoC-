@@ -1,31 +1,13 @@
 #include <stdio.h>
+#include <string.h>
+int main()
+{
+    char a[20]="Program";
+    char b[20]={'P','r','o','g','r','a','m','\0'};
 
-typedef struct {
-    char nome[20];
-    int cpf;
-    int voto;
-} Pessoa;
+    // using the %zu format specifier to print size_t
+    printf("Length of string a = %zu \n",strlen(a));
+    printf("Length of string b = %zu \n",strlen(b));
 
-typedef struct {
-    char nome[20];
-    int numero;
-} Candidato;
-
-int main() {
-    Candidato candidatos[5] = {
-        {"Alberto", 1},
-        {"Gimaraes", 2},
-        {"José", 3},
-        {"Henrique", 4},
-        {"Josildo", 5}
-    };
-
-    printf("Digite o seu nome: ");
-    printf("Digite o seu CPF: ");
-    printf("Digite o seu voto: ");
-
-    Pessoa pessoas = {
-
-    };
-    
+    return 0;
 }

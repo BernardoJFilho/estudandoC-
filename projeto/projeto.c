@@ -16,11 +16,50 @@ typedef struct {
 int allCandidatos(Candidato candidatos[], int tamanho);
 void resultado(Candidato candidatos[], int tamanho);
 void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[], int tamanho);
-void valores();
+void imprimirTabela();
+
+void cadastrarCandidato(Candidato candidatos[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        if (strlen(candidatos[i].nome) == 0){
+            printf("Digite o nome do candidato: ");
+            scanf("%s", candidatos[i].nome);
+            printf("Digite o numero do candidato: ");
+            scanf("%d", &candidatos[i].numero);
+            candidatos[i].voto = 0;
+            break;
+        }
+    }
+}
+
+int cancelarRevoto(const char *nome, Pessoa pessoas[]) {
+    int count = 0;
+    for (int i = 0; i < 100; i++)
+    {
+        if (strstr(pessoas[i].nome, nome) != NULL)
+        {
+            count+=1;
+        }
+    }
+    return count;
+}
+
+int voto(int tamanho, int voto, Candidato candidatos[]) {
+    int value = 0;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (voto == candidatos[i].numero)
+        {
+            candidatos[i].voto += 1;
+        } else {
+            value+=1;
+        }
+    }
+    return value;
+};
 
 int main() {
     Pessoa pessoas[100];
-    Candidato candidatos[] = {
+    Candidato candidatos[100] = {
         {"Alberto", 1, 0},
         {"Gimaraes", 2, 0},
         {"José", 3, 0},
@@ -31,14 +70,14 @@ int main() {
     int numCandidatos = sizeof(candidatos) / sizeof(candidatos[0]);
     int value = 0, opcao;
     printf("-----Bem vindo a urna eletronica-----\n");
-    valores();
+    imprimirTabela();
     scanf("%d", &opcao);
     while (value<100)
     {
         switch (opcao)
         {
         case 0:
-            valores();
+            imprimirTabela();
             scanf("%d", &opcao);
             continue;
         case 1:
@@ -50,6 +89,11 @@ int main() {
             value += 1;
             opcao = 0;
             continue;
+        case 4:
+            cadastrarCandidato(candidatos, numCandidatos);
+            value += 1;
+            opcao = 0;
+            continue;
         case 3:
             resultado(candidatos, numCandidatos);
             value = 200;
@@ -58,7 +102,7 @@ int main() {
     }
 }
 
-void valores(){
+void imprimirTabela(){
     printf("Oque voce quer fazer?\n");
     printf("Digite 1 para ver a tabela de candidatos\n");
     printf("Digite 2 para votar\n");
@@ -69,8 +113,12 @@ void resultado(Candidato candidatos[], int tamanho) {
     int number = 0;
     char name[20];
     for (int i = 0; i < tamanho; i++)
-    {
-        printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].voto);
+    {   
+        if (strlen(candidatos[i].nome) != 0)
+        {
+            printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].voto);
+        }
+        
         if (number < candidatos[i].voto)
         {
             strcpy(name, candidatos[i].nome);
@@ -84,7 +132,10 @@ void resultado(Candidato candidatos[], int tamanho) {
 int allCandidatos(Candidato candidatos[], int tamanho) {
     printf("Tabela dos candidatos\n");
     for (int i = 0; i < tamanho; i++) {
-        printf("Candidato: %s --- Numero: %d\n", candidatos[i].nome, i+1);
+        if (strlen(candidatos[i].nome) != 0)
+        {
+            printf("Candidato: %s --- Numero: %d\n", candidatos[i].nome, candidatos[i].numero);
+        }
     }
     return 0;
 }
@@ -96,12 +147,15 @@ void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[], int ta
     scanf("%d", &pessoas[param].cpf);
     printf("Digite o seu voto: ");
     scanf("%d", &pessoas[param].voto);
-
-    for (int i = 0; i < tamanho; i++)
+    if (cancelarRevoto(pessoas[param].nome, pessoas) == 2)
     {
-        if (pessoas[param].voto == candidatos[i].numero)
+        printf("Pessoa ja cadastrada\n");
+    } else {
+        if (voto(tamanho, pessoas[param].voto, candidatos) == tamanho)
         {
-            candidatos[i].voto += 1;
+            printf("Candidato Nao encontrado\n");
+        } else {
+            printf("Voto Computado\n");
         }
     }
 }
