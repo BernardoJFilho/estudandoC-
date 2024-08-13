@@ -10,21 +10,22 @@ typedef struct {
 typedef struct {
     char nome[20];
     int numero;
+    int voto;
 } Candidato;
 
 int allCandidatos(Candidato candidatos[], int tamanho);
 void resultado(Candidato candidatos[], int tamanho);
-void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[]);
+void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[], int tamanho);
 void valores();
 
 int main() {
     Pessoa pessoas[100];
     Candidato candidatos[] = {
-        {"Alberto", 0},
-        {"Gimaraes", 0},
-        {"José", 0},
-        {"Henrique", 0},
-        {"Josildo", 0}
+        {"Alberto", 1, 0},
+        {"Gimaraes", 2, 0},
+        {"José", 3, 0},
+        {"Henrique", 4, 0},
+        {"Josildo", 5, 0}
     };
 
     int numCandidatos = sizeof(candidatos) / sizeof(candidatos[0]);
@@ -45,7 +46,7 @@ int main() {
             opcao = 0;
             continue;
         case 2:
-            cadastrarPessoa(pessoas, value, candidatos);
+            cadastrarPessoa(pessoas, value, candidatos, numCandidatos);
             value += 1;
             opcao = 0;
             continue;
@@ -69,11 +70,11 @@ void resultado(Candidato candidatos[], int tamanho) {
     char name[20];
     for (int i = 0; i < tamanho; i++)
     {
-        printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].numero);
-        if (number < candidatos[i].numero)
+        printf("Candidato: %s --- Votos: %d\n", candidatos[i].nome, candidatos[i].voto);
+        if (number < candidatos[i].voto)
         {
             strcpy(name, candidatos[i].nome);
-            number = candidatos[i].numero;
+            number = candidatos[i].voto;
         }
     }
 
@@ -88,29 +89,19 @@ int allCandidatos(Candidato candidatos[], int tamanho) {
     return 0;
 }
 
-void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[]) {
+void cadastrarPessoa(Pessoa pessoas[], int param, Candidato candidatos[], int tamanho) {
     printf("Digite o seu nome: ");
     scanf("%s", pessoas[param].nome);
     printf("Digite o seu CPF: ");
     scanf("%d", &pessoas[param].cpf);
     printf("Digite o seu voto: ");
     scanf("%d", &pessoas[param].voto);
-    switch (pessoas[param].voto)
+
+    for (int i = 0; i < tamanho; i++)
     {
-    case 1:
-        candidatos[0].numero += 1;
-        break;
-    case 2:
-        candidatos[1].numero += 1;
-        break;
-    case 3:
-        candidatos[2].numero += 1;
-        break;
-    case 4:
-        candidatos[3].numero += 1;
-        break;
-    default:
-        printf("Numero invalido");
-        break;
+        if (pessoas[param].voto == candidatos[i].numero)
+        {
+            candidatos[i].voto += 1;
+        }
     }
 }
