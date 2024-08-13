@@ -89,12 +89,12 @@ int main() {
             value += 1;
             opcao = 0;
             continue;
-        case 4:
+        case 3:
             cadastrarCandidato(candidatos, numCandidatos);
             value += 1;
             opcao = 0;
             continue;
-        case 3:
+        case 4:
             resultado(candidatos, numCandidatos);
             value = 200;
             break;
@@ -106,7 +106,8 @@ void imprimirTabela(){
     printf("Oque voce quer fazer?\n");
     printf("Digite 1 para ver a tabela de candidatos\n");
     printf("Digite 2 para votar\n");
-    printf("Digite 3 para mostrar o resultado da votacao e sair\n");
+    printf("Digite 3 para registrar candidato\n");
+    printf("Digite 4 para mostrar o resultado da votacao e sair\n");
 }
 
 void resultado(Candidato candidatos[], int tamanho) {
